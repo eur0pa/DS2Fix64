@@ -1,0 +1,9 @@
+#pragma once
+#include "stdafx.h"
+
+Signature fsApplyDurabilityDamage {
+    "\x48\x89\x5C\x24\x10\x48\x89\x6C\x24\x18\x56\x57\x41\x56\x48\x83"
+    "\xEC\x70\x48\x8B\xD9\x48\x8B\x49\x08\x44\x0F\x29\x44\x24\x40",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    strlen(fsApplyDurabilityDamage.mask)
+};

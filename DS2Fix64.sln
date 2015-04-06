@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS2Fix64", "DS2Fix64\DS2Fix64.vcxproj", "{9B1A3377-ECDB-44D1-9B89-46753460B8AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2EC52D8-7550-4F25-BCD1-1A03C2387F28}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Debug|Win32.Build.0 = Debug|Win32
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Debug|x64.ActiveCfg = dbg-x64|x64
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Debug|x64.Build.0 = dbg-x64|x64
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Release|Win32.ActiveCfg = Release|Win32
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Release|Win32.Build.0 = Release|Win32
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Release|x64.ActiveCfg = Release|x64
+		{9B1A3377-ECDB-44D1-9B89-46753460B8AF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
