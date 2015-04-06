@@ -39,7 +39,7 @@ Dark Souls II would damage your weapons based on your framerate. SotFS will just
 .text:00000001401F4965 [6] call    ApplyDurabilityDamage
 ```
 
-here lies the routine responsible for some of the durability damage management. Looking further down @ 1F492F[1] you can see a jmp short to 1F4939[2] — that's where the weapon durability damage is applied. There, the game will compute the damage[3][4][5] and call the routine[6] to apply said damage.
+here lies the routine responsible for some of the durability damage management. Looking further down @ 1F492F[1] you can see a jmp short to 1F4939[2] — that's where the weapon durability damage is applied. Here, the game will compute the damage[3][4][5] and call the routine[6] to apply said damage.
 
 ```
 [ DarkSoulsII.exe+1F4D80 ]
@@ -74,7 +74,7 @@ here lies the routine responsible for some of the durability damage management. 
 .text:00000001401F4E6F     call    SetNewDurability [ @ +151E90]
 ```
 
-We'll hook this baby here at its first 5 bytes[7], and jump to our custom naked function (in \_Durability.asm), which will handle the halving of the damage (stored in the **xmm2** registry, set by the previous function at +1F495E). This is necessary since inline assembly is not possible in MSVC_x64 and I seem too stupid to use \_\_fastcall without trashing the shit out of every single register x86_64 has to offer. Thanks, Microsoft.
+We'll hook this baby here at its first 5 bytes[7], and jump to our custom naked function (in \_Durability.asm), which will handle the halving of the damage (stored in the **xmm2** registry, set by the previous function at +1F495E). This is necessary since inline assembly is not possible in MSVC_x64 and I seem to be too dumb to invoke a \_\_fastcall without trashing the shit out of every single register x86_64 has to offer. Thanks, Microsoft.
 
 We'll just get **xmm2**, halve it and jump back to the trampoline function created by MinHook, where the 5 bytes we overwritten beforehand are stored, then we'll jump into Dark Souls II again and let the game go by its business[8].
 
