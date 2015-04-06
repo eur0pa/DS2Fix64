@@ -39,7 +39,7 @@ Dark Souls II would damage your weapons based on your framerate. SotFS will just
 .text:00000001401F4965 [6] call    ApplyDurabilityDamage
 ```
 
-here lies the routine responsible for some of the durability damage management. Looking further down @ 1F492F^[1] you can see a jmp short to 1F4939^[2] — that's where the weapon durability damage is applied. There, the game will compute the damage^[3]^[4]^[5] and call the routine^[6] to apply said damage.
+here lies the routine responsible for some of the durability damage management. Looking further down @ 1F492F^1 you can see a jmp short to 1F4939^2 — that's where the weapon durability damage is applied. There, the game will compute the damage^3^4^5 and call the routine^6 to apply said damage.
 
 ```
 [ DarkSoulsII.exe+1F4D80 ]
