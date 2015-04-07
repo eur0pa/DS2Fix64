@@ -10,28 +10,28 @@ BOOL Begin()
 {
     if (!GetImageInfo())
     {
-        log_err(">>> GetImageInfo() failed");
+        log_err("GetImageInfo() failed");
         return false;
     }
 
     oApplyDurabilityDamage = (ApplyDurabilityDamage)(FindSignature(&fsApplyDurabilityDamage));
     if (oApplyDurabilityDamage != nullptr)
     {
-        debug(">>> oApplyDurabilityDamage() @ 0x%p", oApplyDurabilityDamage);
+        debug("oApplyDurabilityDamage() @ 0x%p", oApplyDurabilityDamage);
     }
     else {
-        log_err(">>> failed to locate oApplyDurabilityDamage()");
+        log_err("failed to locate oApplyDurabilityDamage()");
         return false;
     }
     
     if (ApplyDetours() != MH_OK)
     {
-        log_err(">>> detouring failed");
+        log_err("detouring failed");
         return false;
     }
 
-    debug(">>> tApplyDurabilityDamage() @ 0x%p", tApplyDurabilityDamage);
-    debug(">>> bApplyDurabilityDamage() @ 0x%p", bApplyDurabilityDamage);
+    debug("tApplyDurabilityDamage() @ 0x%p", tApplyDurabilityDamage);
+    debug("bApplyDurabilityDamage() @ 0x%p", bApplyDurabilityDamage);
 
     return true;
 }
@@ -40,7 +40,7 @@ BOOL End()
 {
     if (RemoveDetours() != MH_OK)
     {
-        log_err(">>> failed to remove detours");
+        log_err("failed to remove detours");
         return false;
     }
 
@@ -54,21 +54,21 @@ int ApplyDetours()
     hr = MH_Initialize();
     if (hr != MH_OK)
     {
-        log_err(">>>> failed to initialize MinHook");
+        log_err("failed to initialize MinHook");
         return hr;
     }
 
     hr = MH_CreateHook((LPVOID*)oApplyDurabilityDamage, (LPVOID)tApplyDurabilityDamage, reinterpret_cast<LPVOID*>(&bApplyDurabilityDamage));
     if (hr != MH_OK)
     {
-        log_err(">>>> failed to create hook");
+        log_err("failed to create hook");
         return hr;
     }
 
     hr = MH_EnableHook(oApplyDurabilityDamage);
     if (hr != MH_OK)
     {
-        log_err(">>>> failed to enable hook");
+        log_err("failed to enable hook");
         return hr;
     }
 
@@ -82,14 +82,14 @@ int RemoveDetours()
     hr = MH_DisableHook(oApplyDurabilityDamage);
     if (hr != MH_OK)
     {
-        log_err(">>>> failed to remove hooks");
+        log_err("failed to remove hooks");
         return hr;
     }
 
     hr = MH_Uninitialize();
     if (hr != MH_OK)
     {
-        log_err(">>>> failed to uninitialize MinHook");
+        log_err("failed to uninitialize MinHook");
         return hr;
     }
 
