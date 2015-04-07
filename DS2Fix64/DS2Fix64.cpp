@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "DS2Fix64.h"
-#include "Utils\Log.h"
 #include "Utils\SigScan.h"
 #include "Core\Signatures.h"
 #include "Fixes\Durability.h"
@@ -9,56 +8,41 @@
 
 BOOL Begin()
 {
-    Log(">> hooked");
-
-    Log(">> GetImageInfo()");
     if (!GetImageInfo())
     {
-        Log(">>> GetImageInfo() failed");
+        log_err(">>> GetImageInfo() failed");
         return false;
     }
 
-    Log(">> FindSignature()");
     oApplyDurabilityDamage = (ApplyDurabilityDamage)(FindSignature(&fsApplyDurabilityDamage));
     if (oApplyDurabilityDamage != nullptr)
     {
-        Log(">>> oApplyDurabilityDamage() @ 0x%p", oApplyDurabilityDamage);
+        debug(">>> oApplyDurabilityDamage() @ 0x%p", oApplyDurabilityDamage);
     }
     else {
-        Log(">>> failed to locate oApplyDurabilityDamage()");
+        log_err(">>> failed to locate oApplyDurabilityDamage()");
         return false;
     }
     
-    Log(">> ApplyDetours()");
     if (ApplyDetours() != MH_OK)
     {
-        Log(">>> detouring failed");
+        log_err(">>> detouring failed");
         return false;
     }
-    else {
-        Log(">>> detours applied successfully");
-    }
-    Log(">>> tApplyDurabilityDamage() @ 0x%p", tApplyDurabilityDamage);
-    Log(">>> bApplyDurabilityDamage() @ 0x%p", bApplyDurabilityDamage);
 
+    debug(">>> tApplyDurabilityDamage() @ 0x%p", tApplyDurabilityDamage);
+    debug(">>> bApplyDurabilityDamage() @ 0x%p", bApplyDurabilityDamage);
 
     return true;
 }
 
 BOOL End()
 {
-    Log(">> RemoveDetours()");
     if (RemoveDetours() != MH_OK)
     {
-        Log(">>> failed to remove detours");
+        log_err(">>> failed to remove detours");
         return false;
     }
-    else {
-        Log(">>> detours removed successfully");
-    }
-
-    Log(">> unhooked");
-    Log("> main thread exiting");
 
     return true;
 }
@@ -70,21 +54,21 @@ int ApplyDetours()
     hr = MH_Initialize();
     if (hr != MH_OK)
     {
-        Log(">>>> failed to initialize MinHook");
+        log_err(">>>> failed to initialize MinHook");
         return hr;
     }
 
     hr = MH_CreateHook((LPVOID*)oApplyDurabilityDamage, (LPVOID)tApplyDurabilityDamage, reinterpret_cast<LPVOID*>(&bApplyDurabilityDamage));
     if (hr != MH_OK)
     {
-        Log(">>>> failed to hook oApplyDurabilityDamage");
+        log_err(">>>> failed to create hook");
         return hr;
     }
 
     hr = MH_EnableHook(oApplyDurabilityDamage);
     if (hr != MH_OK)
     {
-        Log(">>>> failed to detour oApplyDurabilityDamage");
+        log_err(">>>> failed to enable hook");
         return hr;
     }
 
@@ -98,14 +82,14 @@ int RemoveDetours()
     hr = MH_DisableHook(oApplyDurabilityDamage);
     if (hr != MH_OK)
     {
-        Log(">>>> failed to remove detour for oApplyDurabilityDamage");
+        log_err(">>>> failed to remove hooks");
         return hr;
     }
 
     hr = MH_Uninitialize();
     if (hr != MH_OK)
     {
-        Log(">>>> failed to uninitialize MinHook");
+        log_err(">>>> failed to uninitialize MinHook");
         return hr;
     }
 

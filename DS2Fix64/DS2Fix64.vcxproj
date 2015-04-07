@@ -307,7 +307,7 @@
     <ClInclude Include="Fixes\Durability.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="utils\Log.h" />
+    <ClInclude Include="Utils\Debug.h" />
     <ClInclude Include="Utils\SigScan.h" />
   </ItemGroup>
   <ItemGroup>
@@ -350,7 +350,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='rls-x64|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='rls-x64|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="utils\Log.cpp" />
+    <ClCompile Include="Utils\Debug.cpp" />
     <ClCompile Include="Utils\SigScan.cpp" />
   </ItemGroup>
   <ItemGroup>
