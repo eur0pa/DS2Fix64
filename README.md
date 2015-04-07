@@ -4,9 +4,10 @@ Random fixes for Dark Souls II: Scholar of the First Sin (WIP)
 
 ## How to use
 
-1. download the binary from the [release page](https://github.com/eur0pa/DS2Fix64/releases)
-2. unpack it in \Dark Souls II Scholar of the First Sin\Game (in your Steam installation directory)
-3. play the game
+1. get your dirty, dirty hands on the latest, hottest [Microsoft Visual C++ 2013 Redist __for x64__](http://www.microsoft.com/en-us/download/details.aspx?id=40784)
+2. download the binary from the [release page](https://github.com/eur0pa/DS2Fix64/releases)
+3. unpack it in \Dark Souls II Scholar of the First Sin\Game (in your Steam installation directory)
+4. play the game
 
 ## Can I get (soft)banned for using this?
 
