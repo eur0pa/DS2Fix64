@@ -2,11 +2,12 @@
 #include "stdafx.h"
 #include <errno.h>
 
+bool _trace(TCHAR *format, ...);
+#define TRACE _trace
+
 #ifdef NDEBUG
 #define debug(M, ...)
 #else
-bool _trace(TCHAR *format, ...);
-#define TRACE _trace
 #define debug(M, ...) TRACE("[DEBUG] (%s:%d): " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 #endif
 
