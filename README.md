@@ -8,6 +8,10 @@ Random fixes for Dark Souls II: Scholar of the First Sin (WIP)
 2. unpack it in \Dark Souls II Scholar of the First Sin\Game (in your Steam installation directory)
 3. play the game
 
+## Can I get (soft)banned for using this?
+
+Technically, no. It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC.
+
 ## Current fixes
 
 ### Durability bug
