@@ -301,6 +301,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\Signatures.h" />
+    <ClInclude Include="Core\Versions.h" />
     <ClInclude Include="dinput8\dinput.h" />
     <ClInclude Include="dinput8\dinputWrapper.h" />
     <ClInclude Include="DS2Fix64.h" />

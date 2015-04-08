@@ -3,6 +3,7 @@
 
 #include "Utils\SigScan.h"
 #include "Core\Signatures.h"
+#include "Core\Versions.h"
 #include "Fixes\Durability.h"
 #include "Fixes\PlusFourteen.h"
 
@@ -10,6 +11,17 @@
 
 BOOL Begin()
 {
+    if (CheckDkSVersion() != 0)
+    {
+        log_err("CheckDkSVersion() failed: %Iu bytes", CheckDkSVersion());
+        MessageBox(NULL,
+            "This version of Dark Souls II: Scholar of the First Sin\n"
+            "is not supported. DS2Fix64 will now unhook and the game\n"
+            "will proceed as usual. Please update DS2Fix64.",
+            "DS2Fix64 error", MB_OK);
+        return false;
+    }
+
     if (!GetImageInfo())
     {
         log_err("GetImageInfo() failed");
@@ -62,6 +74,27 @@ BOOL End()
     }
 
     return true;
+}
+
+SIZE_T CheckDkSVersion()
+{
+    char buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+    FILE *p_file = nullptr;
+    p_file = fopen(buffer, "rb");
+    fseek(p_file, 0, SEEK_END);
+    SIZE_T szSize = ftell(p_file);
+    fclose(p_file);
+
+    for (auto x = 0; x < _countof(SotFSVersions); x++)
+    {
+        if (szSize == SotFSVersions[x].szSize)
+        {
+            szSize = 0;
+        }
+    }
+
+    return szSize;
 }
 
 BOOL ApplyDetours()
