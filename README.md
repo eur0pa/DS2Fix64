@@ -21,7 +21,7 @@ Dark Souls II would damage your weapons based on your framerate. SotFS will just
 
 #### Details
 
-```
+```Assembly
 [ DarkSoulsII.exe+1F4830 ]
 
 [... snip ...]
@@ -46,7 +46,7 @@ Dark Souls II would damage your weapons based on your framerate. SotFS will just
 
 here lies the routine responsible for some of the durability damage management. Looking further down @ 1F492F[1] you can see a jmp short to 1F4939[2] — that's where the weapon durability damage is applied. Here, the game will compute the damage[3][4][5] and call the routine[6] to apply said damage.
 
-```
+```Assembly
 [ DarkSoulsII.exe+1F4D80 ]
 
 .text:00000001401F4D80 [7] mov     [rsp+10h], rbx
@@ -84,9 +84,81 @@ We'll hook this baby here at its first 5 bytes[7], and jump to our custom naked 
 We'll just get **xmm2**, halve it and jump back to the trampoline function created by MinHook, where the 5 bytes we overwritten beforehand are stored, then we'll jump into Dark Souls II again and let the game go by its business[8].
 
 
+### +14 upgraded items crash / save corruption
+
+Dark Souls II handles upgrades to +10 in game — anything above that (via cheeeeety means) could, can and will cause unexpected behaviour. Notably, the +14 upgrade will crash the game upon opening the inventory / equipment menu and will prevent you from dropping the item, effectively condemning that character to deletion. Let's avoid that, shall we.
+
+#### Details
+
+SotFS seems to manage this exception better than its predecessor — the game *will* remove the offending item and de-upgrade it to +0. Thing is, it will still crash.
+
+Yeah. Don't ask.
+
+```Assembly
+[ DarkSoulsII.exe+1B1650 ]
+
+00007FF629121650    movzx ecx, byte ptr ds:[rbx+25]         | ;+14 crash #1 - inject here
+
+[ injected ]
+
+        movzx ecx, byte ptr[rbx+25h]    ; obtain current upgrade level
+        cmp ecx, 0Ah                    ; +10 max
+        jbe nevermind
+        xor ecx, ecx                    ; upgrade level is >10, zero it
+
+    nevermind:
+        mov rax, [rbp+10h]
+        jmp [return]
+
+[ /injected ]
+
+00007FF629121654    mov rax, qword ptr ss:[rbp+10]          | ;first opcode lost due to hook jmp
+00007FF629121658    mov byte ptr ds:[rax+A6], cl            | ;return here
+00007FF62912165E    mov rax, qword ptr ss:[rbp+10]          |
+00007FF629121662    movzx ecx, byte ptr ds:[rbx+26]         |
+00007FF629121666    mov byte ptr ds:[rax+A7], cl            |
+00007FF62912166C    mov rax, qword ptr ds:[rdi+20]          |
+00007FF629121670    mov rcx, qword ptr ds:[rax+38]          |
+00007FF629121674    mov edx, dword ptr ds:[rcx+14]          |
+00007FF629121677    cmp edx, 319750                         |
+00007FF62912167D    jnz darksoulsii.7FF629121694            |
+```
+
+```Assembly
+[ DarkSoulsII.exe+37DCD ]
+
+00007FF628FA7DCD    movzx eax, byte ptr ds:[rax+25]         | ;+14 crash #2 - inject here
+
+[ injected ]
+
+        movzx eax, byte ptr[rax+25h]    ; obtain current upgrade level
+        cmp eax, 0Ah                    ; +10 max
+        jbe nevermind
+        xor eax, eax                    ; upgrade level is >10, zero it
+
+    nevermind:
+        and al, 0Fh
+        mov byte ptr[rbx], al
+        mov rax, rbx
+        jmp [return]
+
+[ /injected ]
+
+00007FF628FA7DD1    and al, F                               | ;lost due to hook jmp
+00007FF628FA7DD3    mov byte ptr ds:[rbx], al               | ;lost due to hook jmp
+00007FF628FA7DD5    mov rax, rbx                            | ;lost due to hook jmp
+00007FF628FA7DD8    mov rbx, qword ptr ss:[rsp+40]          | ;return here
+00007FF628FA7DDD    mov rsi, qword ptr ss:[rsp+48]          |
+00007FF628FA7DE2    add rsp, 30                             |
+00007FF628FA7DE6    pop rdi                                 |
+00007FF628FA7DE7    ret                                     |
+```
+
+Any idea what the fuck is going on? Hit me.
+
+
 ## Incoming fixes
 
-* +14 weapons save corruption. Is it still there? Drop me a line.
 * Namecrash / assert bug. Still alive? Drop me a line.
 
 
@@ -100,4 +172,5 @@ We'll just get **xmm2**, halve it and jump back to the trampoline function creat
 * Everyone in [here](http://redd.it/31i7nb) minus the spambots
 * K. J., F. T., Y. B., R. F. and O. V. B., who donated the necessary amount to grant me a copy of SotFS. If you want your names to be shown just hit me : )
 * [Atvaark](https://github.com/Atvaark)
+* [Marisa](https://github.com/OrdinaryMagician)
 * [/dsg/](https://boards.4chan.org/vg/catalog#s=/dsg/), magnificient bastards

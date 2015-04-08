@@ -305,6 +305,7 @@
     <ClInclude Include="dinput8\dinputWrapper.h" />
     <ClInclude Include="DS2Fix64.h" />
     <ClInclude Include="Fixes\Durability.h" />
+    <ClInclude Include="Fixes\PlusFourteen.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Utils\Debug.h" />
@@ -340,6 +341,7 @@
     </ClCompile>
     <ClCompile Include="DS2Fix64.cpp" />
     <ClCompile Include="Fixes\Durability.cpp" />
+    <ClCompile Include="Fixes\PlusFourteen.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -359,6 +361,7 @@
   </ItemGroup>
   <ItemGroup>
     <MASM Include="Fixes\_Durability.asm" />
+    <MASM Include="Fixes\_PlusFourteen.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

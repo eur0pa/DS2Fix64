@@ -42,6 +42,9 @@
     <ClInclude Include="Utils\Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Fixes\PlusFourteen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -65,6 +68,9 @@
     <ClCompile Include="Utils\Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Fixes\PlusFourteen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="dinput8\dinput8.def">
@@ -74,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <MASM Include="Fixes\_Durability.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Fixes\_PlusFourteen.asm">
       <Filter>Source Files</Filter>
     </MASM>
   </ItemGroup>
