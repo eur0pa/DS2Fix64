@@ -6,8 +6,7 @@
 #include "Core\Versions.h"
 #include "Fixes\Durability.h"
 #include "Fixes\PlusFourteen.h"
-
-#include "Libs\steam\steam_api.h"
+#include "Matchmaking\Matchmaking.h"
 
 #include "MinHook.h"
 
@@ -45,6 +44,7 @@ BOOL Begin()
     // The second hook needs 11 bytes. Got a better way? Create a pull request!
     oPlusFourteen_2 = (PlusFourteen_2)(FindSignature(&fsPlusFourteenCrash_2));
     bPlusFourteen_2 = (DWORD64)oPlusFourteen_2 + fsPlusFourteenCrash_2.ret;
+
 
     if (!(oApplyDurabilityDamage && oPlusFourteen_1 && oPlusFourteen_2))
     {

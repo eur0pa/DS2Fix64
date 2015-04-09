@@ -348,6 +348,7 @@
     <ClInclude Include="Libs\steam\steam_api.h" />
     <ClInclude Include="Libs\steam\steam_api_flat.h" />
     <ClInclude Include="Libs\steam\steam_gameserver.h" />
+    <ClInclude Include="Matchmaking\Matchmaking.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Utils\Debug.h" />
@@ -384,6 +385,7 @@
     <ClCompile Include="DS2Fix64.cpp" />
     <ClCompile Include="Fixes\Durability.cpp" />
     <ClCompile Include="Fixes\PlusFourteen.cpp" />
+    <ClCompile Include="Matchmaking\Matchmaking.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -404,6 +406,7 @@
   <ItemGroup>
     <MASM Include="Fixes\_Durability.asm" />
     <MASM Include="Fixes\_PlusFourteen.asm" />
+    <MASM Include="Matchmaking\_Matchmaking.asm" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libs\steam\lib\win64\sdkencryptedappticket64.lib" />
