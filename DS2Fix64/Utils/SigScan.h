@@ -9,5 +9,5 @@ struct Signature
     DWORD ret;
 };
 
-BOOL GetImageInfo();
-VOID* FindSignature(Signature* fnSig);
+extern BOOL GetImageInfo();
+extern VOID* FindSignature(Signature* fnSig);

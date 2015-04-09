@@ -4,6 +4,6 @@
 extern BOOL Begin();
 extern BOOL End();
 
-int ApplyDetours();
-int RemoveDetours();
-SIZE_T CheckDkSVersion();
+extern int ApplyDetours();
+extern int RemoveDetours();
+extern SIZE_T CheckDkSVersion();
