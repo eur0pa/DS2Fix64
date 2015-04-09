@@ -29,29 +29,7 @@ BOOL Begin()
         return false;
     }
 
-    // Retrieve injections points by signature
-
-    // This one is a complete hook, we'll return to the trampoline
-    // and back to the original
-    oApplyDurabilityDamage = (ApplyDurabilityDamage)(FindSignature(&fsApplyDurabilityDamage));
-    
-    // +14 patching is mid-function hooking, so we have to manage
-    // the return address differently. The first hook returns 8 bytes
-    // below the injection point.
-    oPlusFourteen_1 = (PlusFourteen_1)(FindSignature(&fsPlusFourteenCrash_1));
-    bPlusFourteen_1 = (DWORD64)oPlusFourteen_1 + fsPlusFourteenCrash_1.ret;
-
-    // The second hook needs 11 bytes. Got a better way? Create a pull request!
-    oPlusFourteen_2 = (PlusFourteen_2)(FindSignature(&fsPlusFourteenCrash_2));
-    bPlusFourteen_2 = (DWORD64)oPlusFourteen_2 + fsPlusFourteenCrash_2.ret;
-
-    if (!(oApplyDurabilityDamage && oPlusFourteen_1 && oPlusFourteen_2))
-    {
-        log_err("failed to locate injection points");
-        return false;
-    }
-    
-    // Enable hooks for fixes
+    // Apply game hooks
     if (GameHooks() == false)
     {
         log_err("detouring failed");
@@ -152,8 +130,41 @@ BOOL SteamHooks()
     return true;
 }
 
+BOOL RemoveSteamHooks()
+{
+    if (MH_DisableHook(oSendP2PPacket) != MH_OK ||
+        MH_DisableHook(oReadP2PPacket) != MH_OK)
+    {
+        log_err("failed to remove hooks for Steam");
+        return false;
+    }
+
+    if (MH_Uninitialize() != MH_OK)
+    {
+        log_warn("failed to uninitialize MinHook for Steam (already uninitialized?)");
+    }
+
+    return true;
+}
+
 BOOL GameHooks()
 {
+    // Retrieve injections points by signature
+
+    // This one is a complete hook, we'll return to the trampoline
+    // and back to the original
+    oApplyDurabilityDamage = (ApplyDurabilityDamage)(FindSignature(&fsApplyDurabilityDamage));
+
+    // +14 patching is mid-function hooking, so we have to manage
+    // the return address differently. The first hook returns 8 bytes
+    // below the injection point.
+    oPlusFourteen_1 = (PlusFourteen_1)(FindSignature(&fsPlusFourteenCrash_1));
+    bPlusFourteen_1 = (DWORD64)oPlusFourteen_1 + fsPlusFourteenCrash_1.ret;
+
+    // The second hook needs 11 bytes. Got a better way? Create a pull request!
+    oPlusFourteen_2 = (PlusFourteen_2)(FindSignature(&fsPlusFourteenCrash_2));
+    bPlusFourteen_2 = (DWORD64)oPlusFourteen_2 + fsPlusFourteenCrash_2.ret;
+
     if (MH_Initialize() != MH_OK)
     {
         log_err("failed to initialize MinHook");
