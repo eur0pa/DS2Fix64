@@ -240,20 +240,22 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;DS2FIX64_EXPORTS;DINPUT8_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>dinput8\dinput8.def</ModuleDefinitionFile>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SetChecksum>true</SetChecksum>
     </Link>
     <PostBuildEvent>
       <Command>copy $(TargetPath) "C:\Games\Steam\SteamApps\common\Dark Souls II Scholar of the First Sin\Game"</Command>
@@ -307,6 +309,45 @@
     <ClInclude Include="DS2Fix64.h" />
     <ClInclude Include="Fixes\Durability.h" />
     <ClInclude Include="Fixes\PlusFourteen.h" />
+    <ClInclude Include="Libs\steam\isteamapplist.h" />
+    <ClInclude Include="Libs\steam\isteamapps.h" />
+    <ClInclude Include="Libs\steam\isteamappticket.h" />
+    <ClInclude Include="Libs\steam\isteamclient.h" />
+    <ClInclude Include="Libs\steam\isteamcontroller.h" />
+    <ClInclude Include="Libs\steam\isteamfriends.h" />
+    <ClInclude Include="Libs\steam\isteamgamecoordinator.h" />
+    <ClInclude Include="Libs\steam\isteamgameserver.h" />
+    <ClInclude Include="Libs\steam\isteamgameserverstats.h" />
+    <ClInclude Include="Libs\steam\isteamhtmlsurface.h" />
+    <ClInclude Include="Libs\steam\isteamhttp.h" />
+    <ClInclude Include="Libs\steam\isteaminventory.h" />
+    <ClInclude Include="Libs\steam\isteammasterserverupdater.h" />
+    <ClInclude Include="Libs\steam\isteammatchmaking.h" />
+    <ClInclude Include="Libs\steam\isteammusic.h" />
+    <ClInclude Include="Libs\steam\isteammusicremote.h" />
+    <ClInclude Include="Libs\steam\isteamnetworking.h" />
+    <ClInclude Include="Libs\steam\isteamps3overlayrenderer.h" />
+    <ClInclude Include="Libs\steam\isteamremotestorage.h" />
+    <ClInclude Include="Libs\steam\isteamscreenshots.h" />
+    <ClInclude Include="Libs\steam\isteamugc.h" />
+    <ClInclude Include="Libs\steam\isteamunifiedmessages.h" />
+    <ClInclude Include="Libs\steam\isteamuser.h" />
+    <ClInclude Include="Libs\steam\isteamuserstats.h" />
+    <ClInclude Include="Libs\steam\isteamutils.h" />
+    <ClInclude Include="Libs\steam\isteamvideo.h" />
+    <ClInclude Include="Libs\steam\matchmakingtypes.h" />
+    <ClInclude Include="Libs\steam\steamclientpublic.h" />
+    <ClInclude Include="Libs\steam\steamcontrollerpublic.h" />
+    <ClInclude Include="Libs\steam\steamencryptedappticket.h" />
+    <ClInclude Include="Libs\steam\steamhttpenums.h" />
+    <ClInclude Include="Libs\steam\steamps3params.h" />
+    <ClInclude Include="Libs\steam\steamtypes.h" />
+    <ClInclude Include="Libs\steam\steamuniverse.h" />
+    <ClInclude Include="Libs\steam\steamvr.h" />
+    <ClInclude Include="Libs\steam\steamvr_flat.h" />
+    <ClInclude Include="Libs\steam\steam_api.h" />
+    <ClInclude Include="Libs\steam\steam_api_flat.h" />
+    <ClInclude Include="Libs\steam\steam_gameserver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Utils\Debug.h" />
@@ -363,6 +404,9 @@
   <ItemGroup>
     <MASM Include="Fixes\_Durability.asm" />
     <MASM Include="Fixes\_PlusFourteen.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Libs\steam\lib\win64\sdkencryptedappticket64.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
