@@ -51,7 +51,7 @@ BOOL Begin()
     }
     
     // Enable hooks
-    if (ApplyDetours() == false)
+    if (GameHooks() == false)
     {
         log_err("detouring failed");
         return false;
@@ -67,7 +67,7 @@ BOOL Begin()
 
 BOOL End()
 {
-    if (RemoveDetours() == false)
+    if (RemoveGameHooks() == false)
     {
         log_err("failed to remove detours");
         return false;
@@ -97,7 +97,7 @@ SIZE_T CheckDkSVersion()
     return szSize;
 }
 
-BOOL ApplyDetours()
+BOOL GameHooks()
 {
     if (MH_Initialize() != MH_OK)
     {
@@ -124,7 +124,7 @@ BOOL ApplyDetours()
     return true;
 }
 
-BOOL RemoveDetours()
+BOOL RemoveGameHooks()
 {
     if (MH_DisableHook(oApplyDurabilityDamage) != MH_OK ||
         MH_DisableHook(oPlusFourteen_1) != MH_OK ||
