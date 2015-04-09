@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "Matchmaking.h"
-#include "Libs\steam\steam_api.h"
-
 
 SendP2PPacket oSendP2PPacket = nullptr;
 SendP2PPacket bSendP2PPacket = nullptr;
