@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DS2Fix64.h"
+
 #include "Core\Hooks.h"
+#include "Core\Versions.h"
 
 BOOL Begin()
 {
