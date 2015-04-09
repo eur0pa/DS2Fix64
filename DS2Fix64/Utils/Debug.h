@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include <errno.h>
 
-bool _trace(TCHAR *format, ...);
+extern bool _trace(TCHAR *format, ...);
 #define TRACE _trace
 
 #ifdef NDEBUG
