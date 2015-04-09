@@ -45,15 +45,14 @@ BOOL Begin()
     oPlusFourteen_2 = (PlusFourteen_2)(FindSignature(&fsPlusFourteenCrash_2));
     bPlusFourteen_2 = (DWORD64)oPlusFourteen_2 + fsPlusFourteenCrash_2.ret;
 
-
     if (!(oApplyDurabilityDamage && oPlusFourteen_1 && oPlusFourteen_2))
     {
         log_err("failed to locate injection points");
         return false;
     }
     
-    // Enable hooks
-    if (ApplyDetours() == false)
+    // Enable hooks for fixes
+    if (GameHooks() == false)
     {
         log_err("detouring failed");
         return false;
@@ -64,12 +63,23 @@ BOOL Begin()
         debug("oPlusFourteen_2 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_2, tPlusFourteen_2, bPlusFourteen_2);
     }
 
+    // Enable hooks for Steam
+    if (SteamHooks() == false)
+    {
+        log_err("Steam hooking failed");
+        return false;
+    }
+    else {
+        debug("oSendP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oSendP2PPacket, tSendP2PPacket, bSendP2PPacket);
+        debug("oReadP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oReadP2PPacket, tReadP2PPacket, bReadP2PPacket);
+    }
+
     return true;
 }
 
 BOOL End()
 {
-    if (RemoveDetours() == false)
+    if (RemoveGameHooks() == false)
     {
         log_err("failed to remove detours");
         return false;
@@ -99,7 +109,50 @@ SIZE_T CheckDkSVersion()
     return szSize;
 }
 
-BOOL ApplyDetours()
+BOOL SteamHooks()
+{
+    HMODULE hSteam = nullptr;
+    while (hSteam == nullptr)
+    {
+        hSteam = GetModuleHandle(TEXT("steam_api64.dll"));
+        Sleep(1000);
+    }
+    debug("hSteam @ 0x%p", hSteam);
+
+    ISteamNetworking* sNetwork = nullptr;
+    while (sNetwork == nullptr)
+    {
+        sNetwork = ((ISteamNetworking*(*)(void))GetProcAddress(hSteam, "SteamNetworking"))();
+        Sleep(1000);
+    }
+    debug("sNetwork @ 0x%p", sNetwork);
+
+    oSendP2PPacket = (SendP2PPacket)(*(uint32**)sNetwork)[0];
+    oReadP2PPacket = (ReadP2PPacket)(*(uint32**)sNetwork)[2];
+
+    if (MH_Initialize() != MH_OK)
+    {
+        log_warn("failed to initialize MinHook for Steam (already initialized?)");
+    }
+
+    if (MH_CreateHook((LPVOID*)oSendP2PPacket, (LPVOID)tSendP2PPacket, reinterpret_cast<LPVOID*>(&bSendP2PPacket)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oReadP2PPacket, (LPVOID)tReadP2PPacket, reinterpret_cast<LPVOID*>(&bReadP2PPacket)) != MH_OK)
+    {
+        log_err("failed to create hooks for Steam");
+        return false;
+    }
+
+    if (MH_EnableHook(oSendP2PPacket) != MH_OK ||
+        MH_EnableHook(oReadP2PPacket) != MH_OK)
+    {
+        log_err("failed to enable hooks for Steam");
+        return false;
+    }
+    
+    return true;
+}
+
+BOOL GameHooks()
 {
     if (MH_Initialize() != MH_OK)
     {
@@ -126,7 +179,7 @@ BOOL ApplyDetours()
     return true;
 }
 
-BOOL RemoveDetours()
+BOOL RemoveGameHooks()
 {
     if (MH_DisableHook(oApplyDurabilityDamage) != MH_OK ||
         MH_DisableHook(oPlusFourteen_1) != MH_OK ||

@@ -211,9 +211,6 @@
     <MASM Include="Fixes\_PlusFourteen.asm">
       <Filter>Source Files</Filter>
     </MASM>
-    <MASM Include="Matchmaking\_Matchmaking.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libs\steam\lib\win64\sdkencryptedappticket64.lib" />

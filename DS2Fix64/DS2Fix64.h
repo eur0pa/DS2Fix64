@@ -4,6 +4,8 @@
 extern BOOL Begin();
 extern BOOL End();
 
-extern int ApplyDetours();
-extern int RemoveDetours();
 extern SIZE_T CheckDkSVersion();
+
+extern BOOL SteamHooks();
+extern BOOL GameHooks();
+extern BOOL RemoveGameHooks();

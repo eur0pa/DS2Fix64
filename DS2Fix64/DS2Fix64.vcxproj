@@ -406,7 +406,6 @@
   <ItemGroup>
     <MASM Include="Fixes\_Durability.asm" />
     <MASM Include="Fixes\_PlusFourteen.asm" />
-    <MASM Include="Matchmaking\_Matchmaking.asm" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Libs\steam\lib\win64\sdkencryptedappticket64.lib" />
