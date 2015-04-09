@@ -48,6 +48,9 @@
     <ClInclude Include="Core\Versions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Hooks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +75,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fixes\PlusFourteen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Versions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
