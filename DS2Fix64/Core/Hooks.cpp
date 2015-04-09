@@ -31,6 +31,14 @@ BOOL SteamHooks()
     oSendP2PPacket = (SendP2PPacket)(*(uint32**)sNetwork)[0];
     oReadP2PPacket = (ReadP2PPacket)(*(uint32**)sNetwork)[2];
 
+    ISteamFriends* sFriends = nullptr;
+    while (sFriends == nullptr)
+    {
+        sFriends = ((ISteamFriends*(*)(void))GetProcAddress(hSteam, "SteamFriends"))();
+        Sleep(1000);
+    }
+    debug("sFriends @ 0x%p", sFriends);
+
     if (MH_Initialize() != MH_OK)
     {
         log_warn("failed to initialize MinHook for Steam (already initialized?)");
