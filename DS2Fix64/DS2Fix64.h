@@ -4,8 +4,5 @@
 extern BOOL Begin();
 extern BOOL End();
 
+extern BOOL GetImageInfo();
 extern SIZE_T CheckDkSVersion();
-
-extern BOOL SteamHooks();
-extern BOOL GameHooks();
-extern BOOL RemoveGameHooks();

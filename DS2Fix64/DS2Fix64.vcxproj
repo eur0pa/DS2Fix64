@@ -302,6 +302,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Hooks.h" />
     <ClInclude Include="Core\Signatures.h" />
     <ClInclude Include="Core\Versions.h" />
     <ClInclude Include="dinput8\dinput.h" />
@@ -355,6 +356,8 @@
     <ClInclude Include="Utils\SigScan.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Hooks.cpp" />
+    <ClCompile Include="Core\Versions.cpp" />
     <ClCompile Include="dinput8\dinputWrapper.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
