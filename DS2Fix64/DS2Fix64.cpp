@@ -7,6 +7,8 @@
 #include "Fixes\Durability.h"
 #include "Fixes\PlusFourteen.h"
 
+#include "Libs\steam\steam_api.h"
+
 #include "MinHook.h"
 
 BOOL Begin()
