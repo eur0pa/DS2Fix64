@@ -10,6 +10,8 @@
 #include "Matchmaking\Blocklist.h"
 #include "Matchmaking\RegionFilter.h"
 
+ISteamFriends* sFriends = nullptr;
+
 BOOL SteamHooks()
 {
     // <Steam>
@@ -32,7 +34,6 @@ BOOL SteamHooks()
 
     // <SteamFriends>
     //  handles: selective player blocking based on relationship status
-    ISteamFriends* sFriends = nullptr;
     while (sFriends == nullptr)
     {
         sFriends = ((ISteamFriends*(*)(void))GetProcAddress(hSteam, "SteamFriends"))();

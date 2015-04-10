@@ -18,5 +18,3 @@ extern LeaveLobby bLeaveLobby;
 extern void __fastcall tCreateLobby(void*, ELobbyType, int);
 extern void __fastcall tJoinLobby(void*, CSteamID);
 extern void __fastcall tLeaveLobby(void*, CSteamID);
-
-extern ISteamMatchmaking* sMatchmaking;
