@@ -157,9 +157,27 @@ Yeah. Don't ask.
 Any idea what the fuck is going on? Hit me.
 
 
+### Namecrash / assert bug
+
+The old namecrash returns. The game isn't able to properly account for mis-tagged text strings that may or may not be voluntarily introduced into your world (read between the lines...) and will crash to desktop.
+
+### Details
+
+```Assembly
+[ DarkSoulsII.exe+1DE7366 ]
+
+00007FF64AC17359    jmp darksoulsii.7FF649952B57            |
+00007FF64AC1735E    mov rbx, qword ptr ss:[rsp+80]          |
+00007FF64AC17366    mov dword ptr ds:[0], DEADBA            | ;namecrash / assert
+00007FF64AC17371    add rsp, 70                             |
+00007FF64AC17375    mov rdi, qword ptr ss:[rsp]             |
+```
+
+Every time the game should encounter an improperly tagged text string, it will take a jump to the commented opcode and try and move 0xDEADBA to NULL. Endlessly, thus crashing shortly after. Bear in mind that being this an assert / part of a SEH, it cannot be simply patched out as I'm doing right now (nopping the shit out of it and requesting a short jmp to the first useful opcode), but needs more work to be deemed stable.
+
 ## Incoming fixes
 
-* Namecrash / assert bug. Still alive? Drop me a line.
+* ?
 
 
 ## Things I'll be on the lookout for
