@@ -12,19 +12,19 @@ LeaveLobby bLeaveLobby = nullptr;
 
 ISteamMatchmaking* sMatchmaking = nullptr;
 
-void __fastcall tCreateLobby(void* __this, void* __edx, ELobbyType eLobbyType, int cMaxMembers)
+void __fastcall tCreateLobby(void* __this, ELobbyType eLobbyType, int cMaxMembers)
 {
     debug("CreateLobby(eLobbyType = %u, cMaxMembers = %d)", eLobbyType, cMaxMembers);
     return bCreateLobby(__this, eLobbyType, cMaxMembers);
 }
 
-void __fastcall tJoinLobby(void* __this, void* __edx, CSteamID steamIDLobby)
+void __fastcall tJoinLobby(void* __this, CSteamID steamIDLobby)
 {
     debug("JoinLobby(CSteamID = %u)", steamIDLobby.ConvertToUint64());
     return bJoinLobby(__this, steamIDLobby);
 }
 
-void __fastcall tLeaveLobby(void* __this, void* __edx, CSteamID steamIDLobby)
+void __fastcall tLeaveLobby(void* __this, CSteamID steamIDLobby)
 {
     debug("LeaveLobby(CSteamID = %u)", steamIDLobby.ConvertToUint64());
     return bLeaveLobby(__this, steamIDLobby);

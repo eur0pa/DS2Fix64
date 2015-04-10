@@ -12,7 +12,7 @@ EFriendRelationship kFRrecv;
 
 bool bReadRes;
 
-bool __fastcall tSendP2PPacket(void* __this, void* __edx, CSteamID steamIDRemote, const void* pubData, uint32 cubData, EP2PSend eP2PSendType, int nChannel)
+bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void* pubData, uint32 cubData, EP2PSend eP2PSendType, int nChannel)
 {
     kFRsend = sFriends->GetFriendRelationship(steamIDRemote);
 
@@ -28,7 +28,7 @@ bool __fastcall tSendP2PPacket(void* __this, void* __edx, CSteamID steamIDRemote
     return bSendP2PPacket(__this, steamIDRemote, pubData, cubData, eP2PSendType, nChannel);
 }
 
-bool __fastcall tReadP2PPacket(void* __this, void* __edx, void* pubDest, uint32 cubDest, uint32* pcubMsgSize, CSteamID* psteamIDRemote, int nChannel)
+bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint32* pcubMsgSize, CSteamID* psteamIDRemote, int nChannel)
 {
     bReadRes = bReadP2PPacket(__this, pubDest, cubDest, pcubMsgSize, psteamIDRemote, nChannel);
     kFRrecv = sFriends->GetFriendRelationship(*psteamIDRemote);
