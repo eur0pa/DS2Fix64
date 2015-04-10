@@ -15,8 +15,8 @@ extern JoinLobby bJoinLobby;
 extern LeaveLobby oLeaveLobby;
 extern LeaveLobby bLeaveLobby;
 
-extern void __fastcall tCreateLobby(void*, ELobbyType, int);
-extern void __fastcall tJoinLobby(void*, CSteamID);
+extern SteamAPICall_t __fastcall tCreateLobby(void*, ELobbyType, int);
+extern SteamAPICall_t __fastcall tJoinLobby(void*, CSteamID);
 extern void __fastcall tLeaveLobby(void*, CSteamID);
 
 extern ISteamMatchmaking* sMatchmaking;
