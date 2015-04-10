@@ -9,6 +9,7 @@
 #include "Fixes\PlusFourteen.h"
 #include "Matchmaking\Blocklist.h"
 #include "Matchmaking\RegionFilter.h"
+#include "Fixes\Assert.h"
 
 ISteamFriends* sFriends = nullptr;
 
@@ -156,6 +157,10 @@ BOOL GameHooks()
     oPlusFourteen_2 = (PlusFourteen_2)(FindSignature(&fsPlusFourteenCrash_2));
     bPlusFourteen_2 = (DWORD64)oPlusFourteen_2 + fsPlusFourteenCrash_2.ret;
 
+    // #Namecrash / SEH assert.
+    oNamecrashAssert = (NamecrashAssert)(FindSignature(&fsNamecrashAssert));
+    PatchNamecrashAssert();
+
     if (MH_Initialize() != MH_OK)
     {
         log_err("Failed to initialize MinHook");
@@ -180,6 +185,7 @@ BOOL GameHooks()
     debug("oApplyDurabilityDamage() @ 0x%p t-> 0x%p b-> 0x%p", oApplyDurabilityDamage, tApplyDurabilityDamage, bApplyDurabilityDamage);
     debug("oPlusFourteen_1 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_1, tPlusFourteen_1, bPlusFourteen_1);
     debug("oPlusFourteen_2 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_2, tPlusFourteen_2, bPlusFourteen_2);
+    debug("oNamecrashAssert @ 0x%p", oNamecrashAssert);
 
     return true;
 }

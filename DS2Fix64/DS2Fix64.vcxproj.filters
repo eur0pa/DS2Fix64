@@ -174,6 +174,9 @@
     <ClInclude Include="Matchmaking\RegionFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Fixes\Assert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -210,6 +213,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Matchmaking\RegionFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fixes\Assert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
