@@ -7,7 +7,7 @@ NamecrashAssert oNamecrashAssert = nullptr;
 // @ https://github.com/OrdinaryMagician/Dks2Util/blob/master/src/InjectUtil.c
 
 BYTE tNamecrashAssert[] = {
-    0xEB, 0x09,             // jmp short +08
+    0xEB, 0x08,             // jmp short +08
     0x90, 0x90, 0x90, 0x90,
     0x90, 0x90, 0x90, 0x90,
     0x90
