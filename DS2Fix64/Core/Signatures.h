@@ -50,3 +50,11 @@ Signature fsPlusFourteenCrash_2 = {
     strlen(fsPlusFourteenCrash_2.mask),
     11
 };
+
+Signature fsNamecrashAssert = {
+    // 1.0.1 @ 00007FF64AC17366
+    "\xC7\x04\x25\x00\x00\x00\x00\xBA\xAD\xDE\x00",  // mov dword ptr ds:[0], DEADBA | ; namecrash / assert
+    "xxxxxxxxxxx",
+    strlen(fsNamecrashAssert.mask),
+    0
+};

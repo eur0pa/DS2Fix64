@@ -306,6 +306,7 @@
     <ClInclude Include="dinput8\dinput.h" />
     <ClInclude Include="dinput8\dinputWrapper.h" />
     <ClInclude Include="DS2Fix64.h" />
+    <ClInclude Include="Fixes\Assert.h" />
     <ClInclude Include="Fixes\Durability.h" />
     <ClInclude Include="Fixes\PlusFourteen.h" />
     <ClInclude Include="stdafx.h" />
@@ -344,6 +345,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DS2Fix64.cpp" />
+    <ClCompile Include="Fixes\Assert.cpp" />
     <ClCompile Include="Fixes\Durability.cpp" />
     <ClCompile Include="Fixes\PlusFourteen.cpp" />
     <ClCompile Include="stdafx.cpp">

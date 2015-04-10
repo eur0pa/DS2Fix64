@@ -7,6 +7,7 @@
 #include "Core\Signatures.h"
 #include "Fixes\Durability.h"
 #include "Fixes\PlusFourteen.h"
+#include "Fixes\Assert.h"
 
 BOOL GameHooks()
 {
@@ -25,6 +26,10 @@ BOOL GameHooks()
     // The second hook needs 11 bytes. Got a better way? Create a pull request!
     oPlusFourteen_2 = (PlusFourteen_2)(FindSignature(&fsPlusFourteenCrash_2));
     bPlusFourteen_2 = (DWORD64)oPlusFourteen_2 + fsPlusFourteenCrash_2.ret;
+
+    // #Namecrash / SEH assert.
+    oNamecrashAssert = (NamecrashAssert)(FindSignature(&fsNamecrashAssert));
+    PatchNamecrashAssert();
 
     if (MH_Initialize() != MH_OK)
     {
@@ -50,6 +55,7 @@ BOOL GameHooks()
     debug("oApplyDurabilityDamage() @ 0x%p t-> 0x%p b-> 0x%p", oApplyDurabilityDamage, tApplyDurabilityDamage, bApplyDurabilityDamage);
     debug("oPlusFourteen_1 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_1, tPlusFourteen_1, bPlusFourteen_1);
     debug("oPlusFourteen_2 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_2, tPlusFourteen_2, bPlusFourteen_2);
+    debug("oNamecrashAssert @ 0x%p", oNamecrashAssert);
 
     return true;
 }
