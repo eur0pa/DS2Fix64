@@ -165,10 +165,13 @@
     <ClInclude Include="Libs\steam\steamvr_flat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Matchmaking\Matchmaking.h">
+    <ClInclude Include="Core\Hooks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Hooks.h">
+    <ClInclude Include="Matchmaking\Blocklist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matchmaking\RegionFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -197,13 +200,16 @@
     <ClCompile Include="Fixes\PlusFourteen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Matchmaking\Matchmaking.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Hooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Versions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Matchmaking\Blocklist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Matchmaking\RegionFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Matchmaking.h"
+#include "Blocklist.h"
 
 SendP2PPacket oSendP2PPacket = nullptr;
 SendP2PPacket bSendP2PPacket = nullptr;
@@ -15,6 +15,7 @@ bool bReadRes;
 bool __fastcall tSendP2PPacket(void* __this, void* __edx, CSteamID steamIDRemote, const void* pubData, uint32 cubData, EP2PSend eP2PSendType, int nChannel)
 {
     kFRsend = sFriends->GetFriendRelationship(steamIDRemote);
+
     if (kFRsend == k_EFriendRelationshipBlocked ||
         kFRsend == k_EFriendRelationshipIgnored ||
         kFRsend == k_EFriendRelationshipIgnoredFriend)

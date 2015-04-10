@@ -7,59 +7,113 @@
 #include "Core\Signatures.h"
 #include "Fixes\Durability.h"
 #include "Fixes\PlusFourteen.h"
-#include "Matchmaking\Matchmaking.h"
-
+#include "Matchmaking\Blocklist.h"
+#include "Matchmaking\RegionFilter.h"
 
 BOOL SteamHooks()
 {
+    // <Steam>
+    //      get the handle for the Steam module and initialize MinHook
     HMODULE hSteam = nullptr;
     while (hSteam == nullptr)
     {
         hSteam = GetModuleHandle(TEXT("steam_api64.dll"));
-        Sleep(1000);
+        Sleep(500);
     }
     debug("hSteam @ 0x%p", hSteam);
-
-    ISteamNetworking* sNetwork = nullptr;
-    while (sNetwork == nullptr)
-    {
-        sNetwork = ((ISteamNetworking*(*)(void))GetProcAddress(hSteam, "SteamNetworking"))();
-        Sleep(1000);
-    }
-    debug("sNetwork @ 0x%p", sNetwork);
-
-    oSendP2PPacket = (SendP2PPacket)(*(uint32**)sNetwork)[0];
-    oReadP2PPacket = (ReadP2PPacket)(*(uint32**)sNetwork)[2];
-
-    ISteamFriends* sFriends = nullptr;
-    while (sFriends == nullptr)
-    {
-        sFriends = ((ISteamFriends*(*)(void))GetProcAddress(hSteam, "SteamFriends"))();
-        Sleep(1000);
-    }
-    debug("sFriends @ 0x%p", sFriends);
 
     if (MH_Initialize() != MH_OK)
     {
         log_warn("failed to initialize MinHook for Steam (already initialized?)");
     }
+    // </Steam>
+
+
+
+    // <SteamFriends>
+    //  handles: selective player blocking based on relationship status
+    ISteamFriends* sFriends = nullptr;
+    while (sFriends == nullptr)
+    {
+        sFriends = ((ISteamFriends*(*)(void))GetProcAddress(hSteam, "SteamFriends"))();
+        Sleep(500);
+    }
+    debug("sFriends @ 0x%p", sFriends);
+    // </SteamFriends>
+
+
+
+    // <SteamNetworking>
+    //  handles: accepting or dropping packets from players based on their relationship
+    //      get the location for members SendP2PPacket() and ReadP2PPacket()
+    //      from the ISteamNetworking VFT and enable their hooks
+    ISteamNetworking* sNetwork = nullptr;
+    while (sNetwork == nullptr)
+    {
+        sNetwork = ((ISteamNetworking*(*)(void))GetProcAddress(hSteam, "SteamNetworking"))();
+        Sleep(500);
+    }
+    debug("sNetwork @ 0x%p", sNetwork);
+
+    oSendP2PPacket = (SendP2PPacket)(*(uint64**)sNetwork)[0];
+    oReadP2PPacket = (ReadP2PPacket)(*(uint64**)sNetwork)[2];
 
     if (MH_CreateHook((LPVOID*)oSendP2PPacket, (LPVOID)tSendP2PPacket, reinterpret_cast<LPVOID*>(&bSendP2PPacket)) != MH_OK ||
         MH_CreateHook((LPVOID*)oReadP2PPacket, (LPVOID)tReadP2PPacket, reinterpret_cast<LPVOID*>(&bReadP2PPacket)) != MH_OK)
     {
-        log_err("failed to create hooks for Steam");
+        log_err("failed to create hooks for SteamNetworking");
         return false;
     }
 
     if (MH_EnableHook(oSendP2PPacket) != MH_OK ||
         MH_EnableHook(oReadP2PPacket) != MH_OK)
     {
-        log_err("failed to enable hooks for Steam");
+        log_err("failed to enable hooks for SteamNetworking");
         return false;
     }
 
     debug("oSendP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oSendP2PPacket, tSendP2PPacket, bSendP2PPacket);
     debug("oReadP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oReadP2PPacket, tReadP2PPacket, bReadP2PPacket);
+    // </SteamNetworking>
+
+
+    
+    // <SteamMatchmaking>
+    //  handles: selective region-based matchmaking
+    //      get the location for member AddRequestLobbyListDistanceFilter()
+    //      from the ISteamMatchmaking VFT and enable its hook
+    ISteamMatchmaking* sMatchmaking = nullptr;
+    while (sMatchmaking == nullptr)
+    {
+        sMatchmaking = ((ISteamMatchmaking*(*)(void))GetProcAddress(hSteam, "SteamMatchmaking"))();
+        Sleep(500);
+    }
+    debug("sMatchmaking @ 0x%p", sMatchmaking);
+
+    oCreateLobby = (CreateLobby)(*(uint64**)sMatchmaking)[13];
+    oJoinLobby = (JoinLobby)(*(uint64**)sMatchmaking)[14];
+    oLeaveLobby = (LeaveLobby)(*(uint64**)sMatchmaking)[15];
+
+    if (MH_CreateHook((LPVOID*)oCreateLobby, (LPVOID)tCreateLobby, reinterpret_cast<LPVOID*>(&bCreateLobby)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oJoinLobby, (LPVOID)tJoinLobby, reinterpret_cast<LPVOID*>(&bJoinLobby)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oLeaveLobby, (LPVOID)tLeaveLobby, reinterpret_cast<LPVOID*>(&bLeaveLobby)) != MH_OK)
+    {
+        log_err("failed to create hooks for SteamMatchmaking");
+        return false;
+    }
+
+    if (MH_EnableHook(oCreateLobby) != MH_OK ||
+        MH_EnableHook(oJoinLobby) != MH_OK ||
+        MH_EnableHook(oLeaveLobby) != MH_OK)
+    {
+        log_err("failed to enable hooks for SteamMatchmaking");
+        return false;
+    }
+
+    debug("oCreateLobby() @ 0x%p t-> 0x%p b-> 0x%p", oCreateLobby, tCreateLobby, bCreateLobby);
+    debug("oJoinLobby() @ 0x%p t-> 0x%p b-> 0x%p", oJoinLobby, tJoinLobby, bJoinLobby);
+    debug("oLeaveLobby() @ 0x%p t-> 0x%p b-> 0x%p", oLeaveLobby, tLeaveLobby, bLeaveLobby);
+    // </SteamMatchmaking>
 
     return true;
 }
@@ -67,7 +121,10 @@ BOOL SteamHooks()
 BOOL RemoveSteamHooks()
 {
     if (MH_DisableHook(oSendP2PPacket) != MH_OK ||
-        MH_DisableHook(oReadP2PPacket) != MH_OK)
+        MH_DisableHook(oReadP2PPacket) != MH_OK ||
+        MH_DisableHook(oCreateLobby) != MH_OK || 
+        MH_DisableHook(oJoinLobby) != MH_OK ||
+        MH_DisableHook(oLeaveLobby) != MH_OK)
     {
         return false;
     }
