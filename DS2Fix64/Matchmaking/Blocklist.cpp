@@ -13,20 +13,30 @@ EFriendRelationship kFRrecv;
 extern ISteamFriends* sFriends;
 
 bool bReadRes;
+bool bFriendsOnly = true;
 
 bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void* pubData, uint32 cubData, EP2PSend eP2PSendType, int nChannel)
 {
     kFRsend = sFriends->GetFriendRelationship(steamIDRemote);
 
-    if (kFRsend == k_EFriendRelationshipBlocked ||
-        kFRsend == k_EFriendRelationshipIgnored ||
-        kFRsend == k_EFriendRelationshipIgnoredFriend)
+    if (bFriendsOnly)
     {
-        debug("SendP2PPacket() -> %I64d (kFR = %d) [discarded]", steamIDRemote.ConvertToUint64(), kFRsend);
-        return false;
+        if (kFRsend != k_EFriendRelationshipFriend)
+        {
+            debug("SendP2PPacket() -> %I64d (kFR = %d) [discarded: friends only]", steamIDRemote.ConvertToUint64(), kFRsend);
+            return false;
+        }
+    }
+    else {
+        if (kFRsend == k_EFriendRelationshipBlocked ||
+            kFRsend == k_EFriendRelationshipIgnored ||
+            kFRsend == k_EFriendRelationshipIgnoredFriend)
+        {
+            debug("SendP2PPacket() -> %I64d (kFR = %d) [discarded: blocklist]", steamIDRemote.ConvertToUint64(), kFRsend);
+            return false;
+        }
     }
 
-    debug("SendP2PPacket() -> %I64d (kFR = %d) [accepted]", steamIDRemote.ConvertToUint64(), kFRsend);
     return bSendP2PPacket(__this, steamIDRemote, pubData, cubData, eP2PSendType, nChannel);
 }
 
@@ -35,14 +45,23 @@ bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint
     bReadRes = bReadP2PPacket(__this, pubDest, cubDest, pcubMsgSize, psteamIDRemote, nChannel);
     kFRrecv = sFriends->GetFriendRelationship(*psteamIDRemote);
 
-    if (kFRrecv == k_EFriendRelationshipBlocked ||
-        kFRrecv == k_EFriendRelationshipIgnored ||
-        kFRrecv == k_EFriendRelationshipIgnoredFriend)
+    if (bFriendsOnly)
     {
-        debug("ReadP2PPacket() <- %I64d (kFR = %d) [discarded]", psteamIDRemote->ConvertToUint64(), kFRrecv);
-        return false;
+        if (kFRrecv != k_EFriendRelationshipFriend)
+        {
+            debug("ReadP2PPacket() <- %I64d (kFR = %d) [discarded: friends only]", psteamIDRemote->ConvertToUint64(), kFRrecv);
+            return false;
+        }
+    }
+    else {
+        if (kFRrecv == k_EFriendRelationshipBlocked ||
+            kFRrecv == k_EFriendRelationshipIgnored ||
+            kFRrecv == k_EFriendRelationshipIgnoredFriend)
+        {
+            debug("ReadP2PPacket() <- %I64d (kFR = %d) [discarded: blocklist]", psteamIDRemote->ConvertToUint64(), kFRrecv);
+            return false;
+        }
     }
 
-    debug("ReadP2PPacket() <- %I64d (kFR = %d) [accepted]", psteamIDRemote->ConvertToUint64(), kFRrecv);
     return bReadRes;
 }
