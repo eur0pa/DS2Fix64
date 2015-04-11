@@ -19,7 +19,7 @@ bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void*
 {
     kFRsend = sFriends->GetFriendRelationship(steamIDRemote);
 
-    if (bFriendsOnly)
+    /*if (bFriendsOnly)
     {
         if (kFRsend != k_EFriendRelationshipFriend)
         {
@@ -27,7 +27,7 @@ bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void*
             return false;
         }
     }
-    else {
+    else {*/
         if (kFRsend == k_EFriendRelationshipBlocked ||
             kFRsend == k_EFriendRelationshipIgnored ||
             kFRsend == k_EFriendRelationshipIgnoredFriend)
@@ -35,7 +35,7 @@ bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void*
             debug("SendP2PPacket() -> %I64d (kFR = %d) [discarded: blocklist]", steamIDRemote.ConvertToUint64(), kFRsend);
             return false;
         }
-    }
+    /*}*/
 
     return bSendP2PPacket(__this, steamIDRemote, pubData, cubData, eP2PSendType, nChannel);
 }
@@ -45,7 +45,7 @@ bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint
     bReadRes = bReadP2PPacket(__this, pubDest, cubDest, pcubMsgSize, psteamIDRemote, nChannel);
     kFRrecv = sFriends->GetFriendRelationship(*psteamIDRemote);
 
-    if (bFriendsOnly)
+    /*if (bFriendsOnly)
     {
         if (kFRrecv != k_EFriendRelationshipFriend)
         {
@@ -53,7 +53,7 @@ bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint
             return false;
         }
     }
-    else {
+    else {*/
         if (kFRrecv == k_EFriendRelationshipBlocked ||
             kFRrecv == k_EFriendRelationshipIgnored ||
             kFRrecv == k_EFriendRelationshipIgnoredFriend)
@@ -61,7 +61,7 @@ bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint
             debug("ReadP2PPacket() <- %I64d (kFR = %d) [discarded: blocklist]", psteamIDRemote->ConvertToUint64(), kFRrecv);
             return false;
         }
-    }
+    /*}*/
 
     return bReadRes;
 }

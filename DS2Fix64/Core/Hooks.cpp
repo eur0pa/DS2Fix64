@@ -84,6 +84,7 @@ BOOL SteamHooks()
     //  handles: selective region-based matchmaking
     //      get the location for member AddRequestLobbyListDistanceFilter()
     //      from the ISteamMatchmaking VFT and enable its hook
+    /*
     ISteamMatchmaking* sMatchmaking = nullptr;
     while (sMatchmaking == nullptr)
     {
@@ -115,6 +116,7 @@ BOOL SteamHooks()
     debug("oCreateLobby() @ 0x%p t-> 0x%p b-> 0x%p", oCreateLobby, tCreateLobby, bCreateLobby);
     debug("oJoinLobby() @ 0x%p t-> 0x%p b-> 0x%p", oJoinLobby, tJoinLobby, bJoinLobby);
     debug("oLeaveLobby() @ 0x%p t-> 0x%p b-> 0x%p", oLeaveLobby, tLeaveLobby, bLeaveLobby);
+    */
     // </SteamMatchmaking>
 
     return true;
@@ -123,10 +125,10 @@ BOOL SteamHooks()
 BOOL RemoveSteamHooks()
 {
     if (MH_DisableHook(oSendP2PPacket) != MH_OK ||
-        MH_DisableHook(oReadP2PPacket) != MH_OK ||
-        MH_DisableHook(oCreateLobby) != MH_OK || 
+        MH_DisableHook(oReadP2PPacket) != MH_OK /*||
+        /MH_DisableHook(oCreateLobby) != MH_OK || 
         MH_DisableHook(oJoinLobby) != MH_OK ||
-        MH_DisableHook(oLeaveLobby) != MH_OK)
+        MH_DisableHook(oLeaveLobby) != MH_OK*/)
     {
         return false;
     }
@@ -194,7 +196,10 @@ BOOL RemoveGameHooks()
 {
     if (MH_DisableHook(oApplyDurabilityDamage) != MH_OK ||
         MH_DisableHook(oPlusFourteen_1) != MH_OK ||
-        MH_DisableHook(oPlusFourteen_2) != MH_OK)
+        MH_DisableHook(oPlusFourteen_2) != MH_OK /*
+        MH_DisableHook(oCreateLobby) != MH_OK ||
+        MH_DisableHook(oJoinLobby) != MH_OK ||
+        MH_DisableHook(oLeaveLobby) != MH_OK*/)
     {
         return false;
     }
