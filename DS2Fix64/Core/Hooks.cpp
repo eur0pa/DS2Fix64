@@ -7,8 +7,8 @@
 #include "Core\Signatures.h"
 #include "Fixes\Durability.h"
 #include "Fixes\PlusFourteen.h"
-#include "Matchmaking\Blocklist.h"
-#include "Matchmaking\RegionFilter.h"
+#include "Steam\Networking.h"
+#include "Steam\Matchmaking.h"
 #include "Fixes\Assert.h"
 
 ISteamFriends* sFriends = nullptr;
@@ -74,16 +74,14 @@ BOOL SteamHooks()
         return false;
     }
 
-    debug("oSendP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oSendP2PPacket, tSendP2PPacket, bSendP2PPacket);
-    debug("oReadP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oReadP2PPacket, tReadP2PPacket, bReadP2PPacket);
+    debug("SendP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oSendP2PPacket, tSendP2PPacket, bSendP2PPacket);
+    debug("ReadP2PPacket() @ 0x%p t-> 0x%p b-> 0x%p", oReadP2PPacket, tReadP2PPacket, bReadP2PPacket);
     // </SteamNetworking>
 
 
     
     // <SteamMatchmaking>
-    //  handles: selective region-based matchmaking
-    //      get the location for member AddRequestLobbyListDistanceFilter()
-    //      from the ISteamMatchmaking VFT and enable its hook
+    //  handles: lobbies
     /*
     ISteamMatchmaking* sMatchmaking = nullptr;
     while (sMatchmaking == nullptr)
@@ -93,29 +91,45 @@ BOOL SteamHooks()
     }
     debug("sMatchmaking @ 0x%p", sMatchmaking);
 
+    oRequestLobbyList = (RequestLobbyList)(*(uint64**)sMatchmaking)[4];
     oCreateLobby = (CreateLobby)(*(uint64**)sMatchmaking)[13];
     oJoinLobby = (JoinLobby)(*(uint64**)sMatchmaking)[14];
     oLeaveLobby = (LeaveLobby)(*(uint64**)sMatchmaking)[15];
+    oGetNumLobbyMembers = (GetNumLobbyMembers)(*(uint64**)sMatchmaking)[17];
+    oGetLobbyMemberByIndex = (GetLobbyMemberByIndex)(*(uint64**)sMatchmaking)[18];
+    oGetLobbyOwner = (GetLobbyOwner)(*(uint64**)sMatchmaking)[35];
 
-    if (MH_CreateHook((LPVOID*)oCreateLobby, (LPVOID)tCreateLobby, reinterpret_cast<LPVOID*>(&bCreateLobby)) != MH_OK ||
+    if (MH_CreateHook((LPVOID*)oRequestLobbyList, (LPVOID)tRequestLobbyList, reinterpret_cast<LPVOID*>(&bRequestLobbyList)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oCreateLobby, (LPVOID)tCreateLobby, reinterpret_cast<LPVOID*>(&bCreateLobby)) != MH_OK ||
         MH_CreateHook((LPVOID*)oJoinLobby, (LPVOID)tJoinLobby, reinterpret_cast<LPVOID*>(&bJoinLobby)) != MH_OK ||
-        MH_CreateHook((LPVOID*)oLeaveLobby, (LPVOID)tLeaveLobby, reinterpret_cast<LPVOID*>(&bLeaveLobby)) != MH_OK)
+        MH_CreateHook((LPVOID*)oLeaveLobby, (LPVOID)tLeaveLobby, reinterpret_cast<LPVOID*>(&bLeaveLobby)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oGetNumLobbyMembers, (LPVOID)tGetNumLobbyMembers, reinterpret_cast<LPVOID*>(&bGetNumLobbyMembers)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oGetLobbyMemberByIndex, (LPVOID)tGetLobbyMemberByIndex, reinterpret_cast<LPVOID*>(&bGetLobbyMemberByIndex)) != MH_OK ||
+        MH_CreateHook((LPVOID*)oGetLobbyOwner, (LPVOID)tGetLobbyOwner, reinterpret_cast<LPVOID*>(&bGetLobbyOwner)) != MH_OK)
     {
         log_err("failed to create hooks for SteamMatchmaking");
         return false;
     }
 
-    if (MH_EnableHook(oCreateLobby) != MH_OK ||
+    if (MH_EnableHook(oRequestLobbyList) != MH_OK ||
+        MH_EnableHook(oCreateLobby) != MH_OK ||
         MH_EnableHook(oJoinLobby) != MH_OK ||
-        MH_EnableHook(oLeaveLobby) != MH_OK)
+        MH_EnableHook(oLeaveLobby) != MH_OK ||
+        MH_EnableHook(oGetNumLobbyMembers) != MH_OK ||
+        MH_EnableHook(oGetLobbyMemberByIndex) != MH_OK ||
+        MH_EnableHook(oGetLobbyOwner) != MH_OK)
     {
         log_err("failed to enable hooks for SteamMatchmaking");
         return false;
     }
 
-    debug("oCreateLobby() @ 0x%p t-> 0x%p b-> 0x%p", oCreateLobby, tCreateLobby, bCreateLobby);
-    debug("oJoinLobby() @ 0x%p t-> 0x%p b-> 0x%p", oJoinLobby, tJoinLobby, bJoinLobby);
-    debug("oLeaveLobby() @ 0x%p t-> 0x%p b-> 0x%p", oLeaveLobby, tLeaveLobby, bLeaveLobby);
+    debug("RequestLobbyList() @ 0x%p t-> 0x%p b-> 0x%p", oRequestLobbyList, tRequestLobbyList, bRequestLobbyList);
+    debug("CreateLobby() @ 0x%p t-> 0x%p b-> 0x%p", oCreateLobby, tCreateLobby, bCreateLobby);
+    debug("JoinLobby() @ 0x%p t-> 0x%p b-> 0x%p", oJoinLobby, tJoinLobby, bJoinLobby);
+    debug("LeaveLobby() @ 0x%p t-> 0x%p b-> 0x%p", oLeaveLobby, tLeaveLobby, bLeaveLobby);
+    debug("GetNumLobbyMembers() @ 0x%p t-> 0x%p b-> 0x%p", oGetNumLobbyMembers, tGetNumLobbyMembers, bGetNumLobbyMembers);
+    debug("GetLobbyMemberByIndex() @ 0x%p t-> 0x%p b-> 0x%p", oGetLobbyMemberByIndex, tGetLobbyMemberByIndex, bGetLobbyMemberByIndex);
+    debug("GetLobbyOwner() @ 0x%p t-> 0x%p b-> 0x%p", oGetLobbyOwner, tGetLobbyOwner, bGetLobbyOwner);
     */
     // </SteamMatchmaking>
 
@@ -126,9 +140,13 @@ BOOL RemoveSteamHooks()
 {
     if (MH_DisableHook(oSendP2PPacket) != MH_OK ||
         MH_DisableHook(oReadP2PPacket) != MH_OK /*||
-        /MH_DisableHook(oCreateLobby) != MH_OK || 
+        MH_DisableHook(oRequestLobbyList) != MH_OK ||
+        MH_DisableHook(oCreateLobby) != MH_OK || 
         MH_DisableHook(oJoinLobby) != MH_OK ||
-        MH_DisableHook(oLeaveLobby) != MH_OK*/)
+        MH_DisableHook(oLeaveLobby) != MH_OK ||
+        MH_DisableHook(oGetNumLobbyMembers) != MH_OK ||
+        MH_DisableHook(oGetLobbyMemberByIndex) != MH_OK ||
+        MH_DisableHook(oGetLobbyOwner) != MH_OK*/)
     {
         return false;
     }
@@ -196,10 +214,7 @@ BOOL RemoveGameHooks()
 {
     if (MH_DisableHook(oApplyDurabilityDamage) != MH_OK ||
         MH_DisableHook(oPlusFourteen_1) != MH_OK ||
-        MH_DisableHook(oPlusFourteen_2) != MH_OK /*
-        MH_DisableHook(oCreateLobby) != MH_OK ||
-        MH_DisableHook(oJoinLobby) != MH_OK ||
-        MH_DisableHook(oLeaveLobby) != MH_OK*/)
+        MH_DisableHook(oPlusFourteen_2) != MH_OK)
     {
         return false;
     }

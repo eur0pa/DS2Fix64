@@ -168,13 +168,13 @@
     <ClInclude Include="Core\Hooks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Matchmaking\Blocklist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Matchmaking\RegionFilter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Fixes\Assert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Steam\Matchmaking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Steam\Networking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -209,13 +209,13 @@
     <ClCompile Include="Core\Versions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Matchmaking\Blocklist.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Matchmaking\RegionFilter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Fixes\Assert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Steam\Matchmaking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Steam\Networking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
