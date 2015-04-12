@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "Networking.h"
 
-SendP2PPacket oSendP2PPacket, bSendP2PPacket = nullptr;
-ReadP2PPacket oReadP2PPacket, bReadP2PPacket = nullptr;
+SendP2PPacket oSendP2PPacket = nullptr,
+              bSendP2PPacket = nullptr;
+
+ReadP2PPacket oReadP2PPacket = nullptr,
+              bReadP2PPacket = nullptr;
 
 EFriendRelationship kFRsend, kFRrecv;
 
