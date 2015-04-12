@@ -1,13 +1,17 @@
 #include "stdafx.h"
 #include "Networking.h"
 
-SendP2PPacket oSendP2PPacket = nullptr,
-              bSendP2PPacket = nullptr;
+SendP2PPacket
+    oSendP2PPacket = nullptr,
+    bSendP2PPacket = nullptr;
 
-ReadP2PPacket oReadP2PPacket = nullptr,
-              bReadP2PPacket = nullptr;
+ReadP2PPacket
+    oReadP2PPacket = nullptr,
+    bReadP2PPacket = nullptr;
 
-EFriendRelationship kFRsend, kFRrecv;
+EFriendRelationship
+    kFRsend,
+    kFRrecv;
 
 extern ISteamFriends* sFriends;
 
@@ -22,7 +26,7 @@ bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void*
     {
         if (kFRsend != k_EFriendRelationshipFriend)
         {
-            debug("SendP2PPacket() -> %I64d (kFR = %d) [discarded: friends only]", steamIDRemote.ConvertToUint64(), kFRsend);
+            debug("SendP2PPacket(-> %I64d) (kFR = %d) [discarded: friends only]", steamIDRemote.ConvertToUint64(), kFRsend);
             return false;
         }
     }
@@ -31,7 +35,7 @@ bool __fastcall tSendP2PPacket(void* __this, CSteamID steamIDRemote, const void*
             kFRsend == k_EFriendRelationshipIgnored ||
             kFRsend == k_EFriendRelationshipIgnoredFriend)
         {
-            debug("SendP2PPacket() -> %I64d (kFR = %d) [discarded: blocklist]", steamIDRemote.ConvertToUint64(), kFRsend);
+            debug("SendP2PPacket(-> %I64d) (kFR = %d) [discarded: blocklist]", steamIDRemote.ConvertToUint64(), kFRsend);
             return false;
         }
     }
@@ -48,7 +52,7 @@ bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint
     {
         if (kFRrecv != k_EFriendRelationshipFriend)
         {
-            debug("ReadP2PPacket() <- %I64d (kFR = %d) [discarded: friends only]", psteamIDRemote->ConvertToUint64(), kFRrecv);
+            debug("ReadP2PPacket(<- %I64d) (kFR = %d) [discarded: friends only]", psteamIDRemote->ConvertToUint64(), kFRrecv);
             return false;
         }
     }
@@ -57,7 +61,7 @@ bool __fastcall tReadP2PPacket(void* __this, void* pubDest, uint32 cubDest, uint
             kFRrecv == k_EFriendRelationshipIgnored ||
             kFRrecv == k_EFriendRelationshipIgnoredFriend)
         {
-            debug("ReadP2PPacket() <- %I64d (kFR = %d) [discarded: blocklist]", psteamIDRemote->ConvertToUint64(), kFRrecv);
+            debug("ReadP2PPacket(<- %I64d) (kFR = %d) [discarded: blocklist]", psteamIDRemote->ConvertToUint64(), kFRrecv);
             return false;
         }
     }

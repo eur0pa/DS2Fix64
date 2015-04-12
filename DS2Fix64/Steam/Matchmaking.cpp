@@ -1,26 +1,33 @@
 #include "stdafx.h"
 #include "Matchmaking.h"
 
-RequestLobbyList oRequestLobbyList = nullptr,
-                 bRequestLobbyList = nullptr;
+RequestLobbyList 
+    oRequestLobbyList = nullptr,
+    bRequestLobbyList = nullptr;
 
-CreateLobby oCreateLobby = nullptr,
-            bCreateLobby = nullptr;
+CreateLobby
+    oCreateLobby = nullptr,
+    bCreateLobby = nullptr;
 
-JoinLobby oJoinLobby = nullptr,
-          bJoinLobby = nullptr;
+JoinLobby
+    oJoinLobby = nullptr,
+    bJoinLobby = nullptr;
 
-LeaveLobby oLeaveLobby = nullptr,
-           bLeaveLobby = nullptr;
+LeaveLobby
+    oLeaveLobby = nullptr,
+    bLeaveLobby = nullptr;
 
-GetNumLobbyMembers oGetNumLobbyMembers = nullptr,
-                   bGetNumLobbyMembers = nullptr;
+GetNumLobbyMembers
+    oGetNumLobbyMembers = nullptr,
+    bGetNumLobbyMembers = nullptr;
 
-GetLobbyMemberByIndex oGetLobbyMemberByIndex = nullptr,
-                      bGetLobbyMemberByIndex = nullptr;
+GetLobbyMemberByIndex
+    oGetLobbyMemberByIndex = nullptr,
+    bGetLobbyMemberByIndex = nullptr;
 
-GetLobbyOwner oGetLobbyOwner = nullptr,
-              bGetLobbyOwner = nullptr;
+GetLobbyOwner
+    oGetLobbyOwner = nullptr,
+    bGetLobbyOwner = nullptr;
 
 SteamAPICall_t __fastcall tRequestLobbyList(void* __this)
 {
