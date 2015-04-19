@@ -10,7 +10,7 @@ Random fixes for Dark Souls II: Scholar of the First Sin (WIP)
 
 ## Can I get (soft)banned for using this?
 
-Technically, no. It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC.
+Technically, no. It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC. Still, many people do really believe this causes softbans so yeah, that's on you, don't come and blame me blah blah.
 
 ## Current fixes
 
