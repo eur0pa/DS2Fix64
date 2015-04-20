@@ -187,7 +187,7 @@ Every time the game should encounter an improperly tagged text string, it will t
 ## Thanks
 
 * Everyone in [here](http://redd.it/31i7nb) minus the spambots
-* K. J., F. T., Y. B., Riccardo Finello and O. V. B., who donated the necessary amount to grant me a copy of SotFS. If you want your names to be shown just hit me : )
+* K. J., Fafniroth, Y. B., Riccardo Finello and O. V. B., who donated the necessary amount to grant me a copy of SotFS. If you want your names to be shown just hit me : )
 * [Atvaark](https://github.com/Atvaark)
 * [Marisa](https://github.com/OrdinaryMagician)
 * [/dsg/](https://boards.4chan.org/vg/catalog#s=/dsg/), magnificient bastards
