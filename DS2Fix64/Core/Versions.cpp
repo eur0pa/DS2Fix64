@@ -7,7 +7,8 @@ struct
     SIZE_T szSize;
 } SotFSVersions[]
 {
-    { "1.0.1", 31663976 }
+    { "1.0.1", 31663976 },
+    { "1.0.2", 31605096 }
 };
 
 SIZE_T CheckDkSVersion()
