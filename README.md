@@ -10,11 +10,11 @@ Random fixes for Dark Souls II: Scholar of the First Sin (WIP)
 
 ## Can I get (soft)banned for using this?
 
-[Technically, no](https://github.com/eur0pa/DS2Fix64/blob/master/Softbans.md). It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC. Still, many people do really believe this causes softbans so yeah, that's on you, don't come and blame me blah blah.
+Read [this](http://kotaku.com/no-ones-sure-why-players-are-suddenly-getting-banned-in-1702590460) and [this](https://github.com/eur0pa/DS2Fix64/blob/master/Softbans.md). It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC. Still, many people do really believe this causes softbans so yeah, that's on you, don't come and blame me blah blah.
 
 ## Current fixes
 
-### Durability bug
+### Durability bug -- disabled: fixed in SotFS 1.0.2
 
 Dark Souls II would damage your weapons based on your framerate. SotFS will just apply the damage twice regardless. Let's not do that.
 
