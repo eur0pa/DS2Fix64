@@ -10,7 +10,7 @@ Random fixes for Dark Souls II: Scholar of the First Sin (WIP)
 
 ## Can I get (soft)banned for using this?
 
-Technically, no. It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC.
+[Technically, no](https://github.com/eur0pa/DS2Fix64/blob/master/Softbans.md). It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC. Still, many people do really believe this causes softbans so yeah, that's on you, don't come and blame me blah blah.
 
 ## Current fixes
 
@@ -187,7 +187,7 @@ Every time the game should encounter an improperly tagged text string, it will t
 ## Thanks
 
 * Everyone in [here](http://redd.it/31i7nb) minus the spambots
-* K. J., F. T., Y. B., Riccardo Finello and O. V. B., who donated the necessary amount to grant me a copy of SotFS. If you want your names to be shown just hit me : )
+* K. J., Fafniroth, Y. B., Riccardo Finello and O. V. B., who donated the necessary amount to grant me a copy of SotFS. If you want your names to be shown just hit me : )
 * [Atvaark](https://github.com/Atvaark)
 * [Marisa](https://github.com/OrdinaryMagician)
 * [/dsg/](https://boards.4chan.org/vg/catalog#s=/dsg/), magnificient bastards
