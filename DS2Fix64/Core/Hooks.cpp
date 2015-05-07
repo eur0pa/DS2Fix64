@@ -5,7 +5,7 @@
 
 #include "Utils\SigScan.h"
 #include "Core\Signatures.h"
-#include "Fixes\Durability.h"
+//#include "Fixes\Durability.h" // fixed in 1.0.2
 #include "Fixes\PlusFourteen.h"
 #include "Fixes\Assert.h"
 
@@ -15,7 +15,8 @@ BOOL GameHooks()
 
     // This one is a complete hook, we'll return to the trampoline
     // and back to the original
-    oApplyDurabilityDamage = (ApplyDurabilityDamage)(FindSignature(&fsApplyDurabilityDamage));
+    // disabled: fixed in 1.0.2
+    // oApplyDurabilityDamage = (ApplyDurabilityDamage)(FindSignature(&fsApplyDurabilityDamage));
 
     // +14 patching is mid-function hooking, so we have to manage
     // the return address differently. The first hook returns 8 bytes
@@ -37,7 +38,7 @@ BOOL GameHooks()
         return false;
     }
 
-    if (MH_CreateHook((LPVOID*)oApplyDurabilityDamage, (LPVOID)tApplyDurabilityDamage, reinterpret_cast<LPVOID*>(&bApplyDurabilityDamage)) != MH_OK ||
+    if (/*MH_CreateHook((LPVOID*)oApplyDurabilityDamage, (LPVOID)tApplyDurabilityDamage, reinterpret_cast<LPVOID*>(&bApplyDurabilityDamage)) != MH_OK ||*/
         MH_CreateHook((LPVOID*)oPlusFourteen_1, (LPVOID)tPlusFourteen_1, NULL) != MH_OK ||
         MH_CreateHook((LPVOID*)oPlusFourteen_2, (LPVOID)tPlusFourteen_2, NULL) != MH_OK)
     {
@@ -45,14 +46,14 @@ BOOL GameHooks()
         return false;
     }
 
-    if (MH_EnableHook(oApplyDurabilityDamage) != MH_OK ||
+    if (/*MH_EnableHook(oApplyDurabilityDamage) != MH_OK ||*/
         MH_EnableHook(oPlusFourteen_1) != MH_OK ||
         MH_EnableHook(oPlusFourteen_2) != MH_OK)
     {
         return false;
     }
 
-    debug("ApplyDurabilityDamage() @ 0x%p t-> 0x%p b-> 0x%p", oApplyDurabilityDamage, tApplyDurabilityDamage, bApplyDurabilityDamage);
+    //debug("ApplyDurabilityDamage() @ 0x%p t-> 0x%p b-> 0x%p", oApplyDurabilityDamage, tApplyDurabilityDamage, bApplyDurabilityDamage);
     debug("PlusFourteen_1 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_1, tPlusFourteen_1, bPlusFourteen_1);
     debug("PlusFourteen_2 @ 0x%p t-> 0x%p b-> 0x%p", oPlusFourteen_2, tPlusFourteen_2, bPlusFourteen_2);
     debug("NamecrashAssert @ 0x%p", oNamecrashAssert);
@@ -62,7 +63,7 @@ BOOL GameHooks()
 
 BOOL RemoveGameHooks()
 {
-    if (MH_DisableHook(oApplyDurabilityDamage) != MH_OK ||
+    if (/*MH_DisableHook(oApplyDurabilityDamage) != MH_OK ||*/
         MH_DisableHook(oPlusFourteen_1) != MH_OK ||
         MH_DisableHook(oPlusFourteen_2) != MH_OK)
     {
