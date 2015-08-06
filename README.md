@@ -10,7 +10,15 @@ Random fixes for Dark Souls II: Scholar of the First Sin (WIP)
 
 ## Can I get (soft)banned for using this?
 
-Read [this](http://kotaku.com/no-ones-sure-why-players-are-suddenly-getting-banned-in-1702590460) and [this](https://github.com/eur0pa/DS2Fix64/blob/master/Softbans.md). It doesn't alter anything we know causes a softban (some item stacks or SM), nor DS2 / DS2SotFS makes use of VAC. Still, many people do really believe this causes softbans so yeah, that's on you, don't come and blame me blah blah.
+Read [this](http://kotaku.com/no-ones-sure-why-players-are-suddenly-getting-banned-in-1702590460) and [this](https://github.com/eur0pa/DS2Fix64/blob/master/Softbans.md).
+
+Yes, you will get softbanned. No, you won't get softbanned. Get it? Softbans are handled manually by a team of people. They will or will not flag you depending on a bunch of reasons and/or mods. This was stated in a softban confirmation email from BAMCO:
+
+>On the DS2fix: The ds2fix was not an officially released FROMSOFTWARE file/mod and as such they are well within their rights to restrict any players using it. We're not really sure of the exact reasons as to why FROMSOFTWARE decides certain mods are violations of the EULA while others appear to go unnoticed (but these will most likely still lead to restrictions once FROM is aware of them) and as such we strongly recommend to our end users that they simply not use any mods, hacks, or external files with the game (since they will all be a "try at your own risk of restrictions").
+ 
+>These are some other apps that can cause issues - using __x360ce, SweetFX, ReShade, DXTory or the Durazno Dead-zone fix.__
+
+So there you have it. You can use DS2Fix64 and be completely fine, or get banned two days later. Or you can avoid using it and get banned regardless because of SweetFX, or X360CE without which your aftermarket gamepad doesn't even work. Shit sucks, I know. But now you do, too (know, not suck). Take care.
 
 ## Current fixes
 
